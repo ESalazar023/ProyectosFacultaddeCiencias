@@ -1,0 +1,40 @@
+#Programa para encontrar una aproximación lineal con mínimos cuadrados
+#Libreríaas a usar
+import operator
+import matplotlib.pyplot as plt
+
+#mediciones en el laboratorio
+x = [5.00, 10.00, 30.00, 50.00, 110.00]
+y = [4.86, 9.68, 29.52, 48.96, 107.54]
+x2 = [] #Para la suma de x al cuadrado
+for i in x:
+    t = i**2    
+    x2.append(t)
+xy = list(map(operator.mul, x, y)) #Para la suma de xy
+           
+n = len(x) #Conocer la cantidad de datos recabados.
+
+#Cálculo de las sumas.
+Sum_x = sum(x)
+Sum_y = sum(y)
+Sum_xx = sum(x2)
+Sum_xy = sum(xy)
+v = Sum_x**2
+
+m = (( n * Sum_xy ) - ( Sum_x * Sum_y)) / ((n * Sum_xx) - v) #Pendiente
+b = (( Sum_xx * Sum_y ) - ( Sum_xy * Sum_x)) / ((n * Sum_xx) - v) #ordenada al origen
+print('El valor de la pendiente es:',m,"mientras que la ordenada al origen es:",b)
+
+#Para graficar los puntos
+for i in range(0,5):
+    plt.plot(x[i],y[i], marker="^", color="magenta")
+
+#Para graficar la función ajustada
+r = range(0,120)
+def f0(r):
+    return m*r + b
+plt.plot(r,[f0(i) for i in r])
+plt.title("Masa en función del volumen m(v).")
+plt.xlabel("Volumen (ml).")
+plt.ylabel("Masa (g).")
+
